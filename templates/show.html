@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File reading</title>
+</head>
+<style>
+    #his_table{
+    display: none;
+}
+    table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+<script>
+    function show() {;
+    document.getElementById("his_table").style.display="block";
+}
+
+</script>
+    <form action="" method="POST">
+        <textarea name='awesome' class="text" cols="86" rows ="20">{{ content }}</textarea>
+        <!--<input type="text"  name="username" value="{{ content }}" >-->
+        <input class="btn btn-default" name="chk" type="submit" value="Update">
+        <br>
+        <br>
+
+    </form>
+        <button type="button" onclick="show()">Get the history of updates to this file</button>
+    <table id="his_table">
+        <tr>
+            <th>Username</th>
+            <th>IP Address</th>
+            <th>Date and Time</th>
+
+        </tr>
+
+
+        {% for post in history %}
+        <tr>
+            <td>{{ post.uname }}</td>
+            <td>{{ post.address }}</td>
+            <td>{{ post.Time }}</td>
+        </tr>
+
+        {% endfor %}
+
+
+    </table>
+
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
+</body>
+</html>

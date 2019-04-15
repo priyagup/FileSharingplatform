@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask Intro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <style>
+body {background-color: powderblue;text-align: center;}
+h1   {color: blue;text-align: center;}
+p    {color: red; width: 100%;
+  bottom: 30px;
+  text-align: center;}
+
+      input[type="submit"] {
+          width: 70px;
+          height: 70px;
+          border: black;
+          background: url(/static/images/icon.png) #ff9900;
+          background-size: 100%;
+          color: #fff;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 12px;
+          color: black;
+          vertical-align: text-bottom;
+          text-align: end;
+      }
+
+</style>
+  <body>
+    <div class="container" >
+      <h1>Welcome to Flask!</h1>
+      <br>
+      <form action="" method="post">
+
+        <p>Click <a href="/logout">here</a> to logout.</p>
+        <br><br>
+        <h3>Your files:</h3>
+        {% for post in posts %}
+        <p><input name="file_name" type="submit" value="{{ post.name }}" id="submitForm"></p>
+        <br>
+        {% endfor %}
+
+
+        <p>Click <a href="/upload">here</a> if you want to upload files</p>
+
+      </form>
+        {% for message in get_flashed_messages() %}
+        {{ message }}
+        {% endfor %}
+    </div>
+  </body>
+</html>
