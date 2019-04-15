@@ -1,0 +1,4 @@
+NewwwEvery database must have a storage abstraction, a way to store data for further use.
+For this project we are going to use a simple in-memory strategy, which means that the content will be
+stored only in the volatile memory, no backup or filesystem support is provided.nAlso, it is important at this stage to define the structure of our key value storage, for example purposes
+both the key and the value are going to be Strings.
