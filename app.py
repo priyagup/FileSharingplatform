@@ -67,7 +67,7 @@ def show_edit():
     history_dict =[]
     if len(history)>5:
         for j in range(len(history), len(history)-5, -1):
-            history_dict.append(history[j])
+            history_dict.append(history[j-1])
     else:
         history_dict=history.copy()
 
