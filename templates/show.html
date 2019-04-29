@@ -8,13 +8,22 @@
     #his_table{
     display: none;
 }
+    #share,#process_input{
+        display:none;
+    }
     table,th,td {
   border : 1px solid black;
-  border-collapse: collapse;
 }
-th,td {
+    th,td {
   padding: 5px;
 }
+    table {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    body {background-color: powderblue;text-align: center;}
 </style>
 <body>
 <script>
@@ -22,35 +31,74 @@ th,td {
     document.getElementById("his_table").style.display="block";
 }
 
-</script>
-    <form action="" method="POST">
-        <textarea name='awesome' class="text" cols="86" rows ="20">{{ content }}</textarea>
-        <!--<input type="text"  name="username" value="{{ content }}" >-->
-        <input class="btn btn-default" name="chk" type="submit" value="Update">
-        <br>
-        <br>
+function sharing() {
+        var x = document.getElementById("share");
+        var y = document.getElementById("process_input");
+        if (x.style.display === "none") {
+    x.style.display = "inline-block";
+    y.style.display = "inline-block";
+    document.getElementById("shbutton").innerHTML = "Cancel";
+  } else {
+    x.style.display = "none";
+    y.style.display = "none";
+    document.getElementById("shbutton").innerHTML = "+Share";
+  }
 
+}
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type=text/javascript>
+			$(function() {
+			  $('a#process_input').bind('click', function() {
+				$.getJSON('/background_process', {
+				  user: $('input[name="user"]').val(),
+				}, function(data) {
+				  $("#result").text(data.result);
+				});
+				return false;
+			  });
+			});
+		</script>
+    <form action="" method="POST">
+        <p><a href="/welcome">HOME</a></p>
+        <br>
+        <br>
+        <h3>{{session['file_name']}}</h3>
+        <textarea name='awesome' class="text" cols="86" rows ="20">{{ content }}</textarea>
+        <br>
+        <!--<input type="text"  name="username" value="{{ content }}" >-->
+        <p>
+            <input class="btn btn-default" name="chk" id = "update" type="submit" value="Update">
+            <br>
+
+        <div >
+        <button type="button" id ="shbutton" onclick="sharing()">+Share</button>
+            <form >
+				<input type=text id ="share"size=5 name=user>
+				<a href=# id=process_input><button class='btn btn-default'>Share Now</button></a>
+			</form>
+        </div>
+
+        </p>
+
+        <p id=result></p>
+        <br>
     </form>
         <button type="button" onclick="show()">Get the history of updates to this file</button>
+        <br>
     <table id="his_table">
         <tr>
             <th>Username</th>
             <th>IP Address</th>
             <th>Date and Time</th>
-
         </tr>
-
-
         {% for post in history %}
         <tr>
             <td>{{ post.uname }}</td>
             <td>{{ post.address }}</td>
             <td>{{ post.Time }}</td>
         </tr>
-
         {% endfor %}
-
-
     </table>
 
     {% for message in get_flashed_messages() %}
