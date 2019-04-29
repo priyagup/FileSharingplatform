@@ -1,5 +1,5 @@
 # import the Flask class from the flask module
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from functools import wraps
 from pymongo import MongoClient
 import datetime
@@ -43,7 +43,7 @@ def welcome():
         session['file_name']=request.form['file_name']
         return redirect(url_for('show_edit'))
 
-    return render_template('welcome.html',posts=result)  # render a template
+    return render_template('welcome.html',posts=result, uname=session['uname'])  # render a template
 
 @app.route('/show', methods=['GET','POST'])
 @login_required
@@ -89,6 +89,22 @@ def show_edit():
 
     return render_template('show.html', content=content, history=history_dict)
 
+@app.route('/background_process')
+def background_process():
+    try:
+        client = MongoClient(
+            "mongodb://priyagup:Codepri%40143@advancedropboxproject-shard-00-00-jdfx8.mongodb.net:27017,advancedropboxproject-shard-00-01-jdfx8.mongodb.net:27017,advancedropboxproject-shard-00-02-jdfx8.mongodb.net:27017/test?ssl=true&replicaSet=AdvanceDropboxproject-shard-0&authSource=admin&retryWrites=true")
+
+        db = client["AdvanceDropboxproject"]
+        col = db["Files"]
+        print(request.args.get('user'))
+        x=col.update_one({'name': session['file_name']},{"$push": {"access": request.args.get('user') }})
+        print(x)
+        print("wahtttt")
+        return jsonify(result='Shared with the user')
+    except Exception as e:
+        return str(e)
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
@@ -103,11 +119,11 @@ def upload():
 
         db = client["AdvanceDropboxproject"]
         col = db["Files"]
-        row = {"name": f.filename, "content": content}
+        row = {"name": f.filename, "content": content, "access": [session['uname']]}
         x=col.insert_one(row)
         print(content)
         print(x)
-        return 'Uploaded successfully'
+        return redirect(url_for('welcome'))
     return render_template('upload.html')
 
 # Route for handling the login page logic
