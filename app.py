@@ -105,7 +105,7 @@ def background_process():
     except Exception as e:
         return str(e)
 
-
+#Upload change
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
@@ -125,7 +125,7 @@ def upload():
         print(x)
         return redirect(url_for('welcome'))
     return render_template('upload.html')
-
+#Login page
 # Route for handling the login page logic
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -152,6 +152,7 @@ def login():
             return redirect(url_for('welcome'))
     return render_template('login.html', error=error)
 
+# Logout page
 @app.route('/logout')
 @login_required
 def logout():
