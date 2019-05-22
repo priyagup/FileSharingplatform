@@ -5,7 +5,7 @@ Author: Priya Gupta
 **Client-Side/ Server-Side Programing: JavaScript - HTML - Flask - Python - WSGI - MongoDB**
 
 Inspired by Google and Dropbox  - Grade Project
->Initial Design Face - Version 1.0.1
+>Initial Design Phase - Version 1.0.1
 
 >Description:
 1. Supports real time editing and viewing files/folders/database by clients. 
@@ -15,7 +15,7 @@ Inspired by Google and Dropbox  - Grade Project
 Static Folder: Code of Javascript and CSS on bootstrap Framework
 Templates: HTML pages to give UI to client
 - Login.html
-  - This is the entry page where you have to login and while login call going to the mongodb to check whether the user is register or not. 
+  - This is the entry page where you have to login and while login call going to the mongodb to check whether the user is register or not. another feature is you have to login first after login only you are able to access upload, welcome and show URL.  
 - show.html
   - Display the three sections 
     - Text written in the file
